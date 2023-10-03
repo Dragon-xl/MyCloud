@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 10.0.2, 2023-10-03T23:49:11. -->
+<!-- Written by QtCreator 10.0.2, 2023-10-03T23:52:09. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -233,16 +233,35 @@
     <value type="bool" key="Analyzer.Perf.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.QmlProfiler.Settings.UseGlobalSettings">true</value>
     <value type="bool" key="Analyzer.Valgrind.Settings.UseGlobalSettings">true</value>
+    <valuelist type="QVariantList" key="Analyzer.Valgrind.VisibleErrorKinds">
+     <value type="QString">0</value>
+     <value type="QString">1</value>
+     <value type="QString">2</value>
+     <value type="QString">3</value>
+     <value type="QString">4</value>
+     <value type="QString">5</value>
+     <value type="QString">6</value>
+     <value type="QString">7</value>
+     <value type="QString">8</value>
+     <value type="QString">9</value>
+     <value type="QString">10</value>
+     <value type="QString">11</value>
+     <value type="QString">12</value>
+     <value type="QString">13</value>
+     <value type="QString">14</value>
+    </valuelist>
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:E:/qtstudy/dragoncloud/dragoncloud.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">E:/qtstudy/dragoncloud/dragoncloud.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">dragoncloud2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:E:/MyCloud/dragoncloud/dragoncloud.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">E:/MyCloud/dragoncloud/dragoncloud.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">E:/qtstudy/build-dragoncloud-Desktop_Qt_5_15_2_MinGW_64_bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
