@@ -8,6 +8,15 @@ LoginTitleWg::LoginTitleWg(QWidget *parent) :
     ui->setupUi(this);
     ui->label_icon->setPixmap(QPixmap("://images/cloud.png").scaled(40,40));
     m_parent=parent;
+    connect(ui->toolButton_set,&QToolButton::clicked,[=](){
+        emit showSetWg();
+    });
+    connect(ui->toolButton_quit,&QToolButton::clicked,[=](){
+        emit closeWin();
+    });
+    connect(ui->toolButton_min,&QToolButton::clicked,[=](){
+        m_parent->showMinimized();
+    });
 
 }
 

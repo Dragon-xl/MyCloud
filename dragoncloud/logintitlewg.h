@@ -18,6 +18,9 @@ public:
 protected:
     void mouseMoveEvent(QMouseEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
+signals:
+    void showSetWg();
+    void closeWin();
 
 private:
     Ui::LoginTitleWg *ui;
