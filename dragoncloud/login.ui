@@ -35,7 +35,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="page_login">
       <widget class="QWidget" name="widget_5" native="true">
@@ -626,6 +626,23 @@ color: rgb(255, 255, 255);</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>toolButton_reg</tabstop>
+  <tabstop>toolButton_2</tabstop>
+  <tabstop>lineEdit_reglet</tabstop>
+  <tabstop>lineEdit_regname</tabstop>
+  <tabstop>lineEdit_regpwd</tabstop>
+  <tabstop>lineEdit_regpwdd</tabstop>
+  <tabstop>lineEdit_regmail</tabstop>
+  <tabstop>lineEdit_regnike</tabstop>
+  <tabstop>toolButton_4</tabstop>
+  <tabstop>lineEdit_ip</tabstop>
+  <tabstop>lineEdit_port</tabstop>
+  <tabstop>toolButton_3</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

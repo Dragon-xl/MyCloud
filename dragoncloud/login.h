@@ -14,8 +14,12 @@ class Login : public QDialog
 public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
+    void saveWebInfo(QString ip,QString port,QString path);
 protected:
     void paintEvent(QPaintEvent *ev);
+
+private slots:
+    void on_toolButton_3_clicked();
 
 private:
     Ui::Login *ui;
