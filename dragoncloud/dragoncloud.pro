@@ -12,6 +12,7 @@ SOURCES += \
     common/common.cpp \
     common/des.c \
     common/logininfoinstance.cpp \
+    funtion.cpp \
     login.cpp \
     logintitlewg.cpp \
     main.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     common/common.h \
     common/des.h \
     common/logininfoinstance.h \
+    funtion.h \
     login.h \
     logintitlewg.h \
     mainwindow.h

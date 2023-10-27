@@ -1,7 +1,6 @@
 #include "login.h"
 #include "ui_login.h"
 #include<QPainter>
-#include"common/common.h"
 #include<QMessageBox>
 #include<QJsonDocument>
 #include<QJsonObject>
@@ -10,6 +9,8 @@
 #include<QFile>
 #include<QDebug>
 #include<QMap>
+#define IP_REG "^((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))$"
+#define PORT_REG "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
 Login::Login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Login)
