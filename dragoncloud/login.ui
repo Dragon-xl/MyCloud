@@ -35,7 +35,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_login">
       <widget class="QWidget" name="widget_5" native="true">
@@ -378,7 +378,7 @@ color: rgb(255, 255, 255);</string>
             </spacer>
            </item>
            <item>
-            <widget class="QToolButton" name="toolButton_4">
+            <widget class="QToolButton" name="toolButton_reg_2">
              <property name="minimumSize">
               <size>
                <width>200</width>
@@ -638,7 +638,7 @@ color: rgb(255, 255, 255);</string>
   <tabstop>lineEdit_regpwdd</tabstop>
   <tabstop>lineEdit_regmail</tabstop>
   <tabstop>lineEdit_regnike</tabstop>
-  <tabstop>toolButton_4</tabstop>
+  <tabstop>toolButton_reg_2</tabstop>
   <tabstop>lineEdit_ip</tabstop>
   <tabstop>lineEdit_port</tabstop>
   <tabstop>toolButton_3</tabstop>

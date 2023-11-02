@@ -4,6 +4,7 @@
 #include<QJsonDocument>
 #include<QJsonObject>
 #include<QStringList>
+#include<QMap>
 Funtion::Funtion(QWidget *parent)
     : QWidget{parent}
 {
@@ -40,8 +41,25 @@ QString Funtion::getCfgValue(QString name, QString key,QString pathname)
     }
     else
     {
-        qDebug()<<"JsonType W";s
+        qDebug()<<"JsonType W"
     return QString();
     }
 
 }
+
+QString Funtion::writeCfgFIle(QString ip, QString port, QString pathname)
+{
+    QMap<QString,QVariant> web_server;
+    web_server.insert("ip",ip);
+    web_server.insert("port",port);
+
+    QMap<QString,QVariant> type_path;
+    type_path.insert("path",pathname);
+
+}
+
+
+
+
+
+
