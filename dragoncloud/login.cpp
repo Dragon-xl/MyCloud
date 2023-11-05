@@ -13,6 +13,7 @@
 #include<QNetworkAccessManager>
 #include<QNetworkReply>
 #include<QNetworkRequest>
+#include"funtion.h"
 //正则
 #define IP_REG "^((25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))$"
 #define PORT_REG "^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$"
@@ -101,8 +102,6 @@ void Login::saveWebInfo(QString ip, QString port, QString path)
     serverinfo.insert("port",port);
 
 
-
-
 }
 
 QByteArray Login::getRegJson(QString userName, QString nickName, QString passWord, QString phone, QString email)
@@ -123,7 +122,7 @@ void Login::paintEvent(QPaintEvent *ev)
     QPainter p(this);
     p.drawPixmap(0,0,width(),height(),QPixmap("://images/login_bk.jpg"));
 }
-
+//服务器设置确定按钮
 void Login::on_toolButton_3_clicked()
 {
     QString ip = ui->lineEdit_ip->text();
@@ -210,26 +209,61 @@ void Login::on_toolButton_reg_2_clicked()
 
     QByteArray array = getRegJson(userName,nikeName,passWord,phone,email);
 
-    QNetworkAccessManager manager;
-    QNetworkRequest request
-    manager.post()
+    QNetworkAccessManager* manager=Funtion::getManager();
+    QNetworkRequest request;
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+    request.setHeader(QNetworkRequest::ContentLengthHeader,array.length());
+    QString ip = ui->lineEdit_ip->text();
+    QString port = ui->lineEdit_port->text();
+    QString url = QString("http;//%1:%2/reg").arg(ip).arg(port);
+    request.setUrl(QUrl(url));
+    QNetworkReply* reple =  manager->post(request,array);
+    connect(reple,&QNetworkReply::readyRead,[=]()
+    {
+        QByteArray json = reple->readAll();
+        QString ret = m_fun.getStatusCode(json);
+        if(ret =="002")//注册成功
+        {
+            QMessageBox::information(this,"注册成功","注册成功");
+            ui->lineEdit_regname->clear();
+            ui->lineEdit_regpwd->clear();
+            ui->lineEdit_regpwdd->clear();
+            ui->lineEdit_regnike->clear();
+            ui->lineEdit_reglet->clear();
+            ui->lineEdit_regmail->clear();
+            //登录界面
+            ui->lineEdit->setText(userName);//登录界面
+            ui->lineEdit_2->setText(passWord);
+           //切换到登录界面
+            ui->stackedWidget->setCurrentWidget(ui->page_login);
+
+        }
+        if(ret == "003")//用户存在
+        {
+            QMessageBox::information(this,"错误","用户已存在");
+        }
+        if(ret == "004")//失败
+        {
+            QMessageBox::information(this,"错误","注册失败");
+        }
+
+    });
+    reple->deleteLater();
 
 }
 
+//登录确定
+void Login::on_toolButton_lgin_clicked()
+{
+    QString userName = ui->lineEdit->text();
+    QString passWord = ui->lineEdit_2->text();
+    QString ip = ui->lineEdit_ip->text();
+    QString port = ui->lineEdit_port->text();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    QNetworkAccessManager* manager = Funtion::getManager();
+    QNetworkRequest request;
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"appliction/json");
+    //requset,setHeader(QNetworkRequest::ContentLengthHeader,)
+   // manager->post()
+}
 

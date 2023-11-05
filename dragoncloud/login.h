@@ -2,7 +2,7 @@
 #define LOGIN_H
 
 #include <QDialog>
-
+#include"funtion.h"
 namespace Ui {
 class Login;
 }
@@ -16,6 +16,7 @@ public:
     ~Login();
     void saveWebInfo(QString ip,QString port,QString path);
     QByteArray getRegJson(QString userName,QString nickName,QString passWord,QString phone,QString email );
+
 protected:
     void paintEvent(QPaintEvent *ev);
 
@@ -23,6 +24,12 @@ private slots:
     void on_toolButton_3_clicked();
 
     void on_toolButton_reg_2_clicked();
+    void on_toolButton_2_clicked();
+
+    void on_toolButton_lgin_clicked();
+
+private:
+    Funtion m_fun;
 
 private:
     Ui::Login *ui;

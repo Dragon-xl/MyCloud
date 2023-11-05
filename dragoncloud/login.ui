@@ -35,7 +35,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page_login">
       <widget class="QWidget" name="widget_5" native="true">
@@ -141,7 +141,7 @@
             <widget class="QWidget" name="widget_3" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
-               <widget class="QCheckBox" name="checkBox">
+               <widget class="QCheckBox" name="checkBox_savepwd">
                 <property name="text">
                  <string>记住密码</string>
                 </property>
@@ -191,7 +191,7 @@ color: rgb(255, 182, 55);
                </spacer>
               </item>
               <item>
-               <widget class="QToolButton" name="toolButton_2">
+               <widget class="QToolButton" name="toolButton_lgin">
                 <property name="minimumSize">
                  <size>
                   <width>200</width>
@@ -629,9 +629,9 @@ color: rgb(255, 255, 255);</string>
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>lineEdit_2</tabstop>
-  <tabstop>checkBox</tabstop>
+  <tabstop>checkBox_savepwd</tabstop>
   <tabstop>toolButton_reg</tabstop>
-  <tabstop>toolButton_2</tabstop>
+  <tabstop>toolButton_lgin</tabstop>
   <tabstop>lineEdit_reglet</tabstop>
   <tabstop>lineEdit_regname</tabstop>
   <tabstop>lineEdit_regpwd</tabstop>
