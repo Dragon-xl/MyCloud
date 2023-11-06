@@ -104,7 +104,7 @@ void Login::saveWebInfo(QString ip, QString port, QString path)
 
 }
 
-QByteArray Login::getRegJson(QString userName, QString nickName, QString passWord, QString phone, QString email)
+QByteArray Login::setRegJson(QString userName, QString nickName, QString passWord, QString phone, QString email)
 {
     QMap<QString,QVariant> reg;
     reg.insert("userName",userName);
@@ -117,6 +117,30 @@ QByteArray Login::getRegJson(QString userName, QString nickName, QString passWor
     return array;
 }
 
+QByteArray Login::setLoginJson(QString userName, QString passWord)
+{
+    QMap<QString,QVariant> login;
+    login.insert("user",userName);
+    login.insert("pwd",passWord);
+    QJsonDocument doc = QJsonDocument::fromVariant(login);
+    QByteArray arr = doc.toJson();
+    return arr;
+}
+QStringList getLoginStatus(QByteArray json)
+{
+    QStringList list;
+    QJsonDocument doc = QJsonDocument::fromJson(json);
+    if(!doc.isEmpty() || !doc.isNull())
+    {
+        if(doc.isObject())
+        {
+            QJsonObject obj = doc.object();
+            list.append(obj.value("code").toString());
+            list.append(obj.value("token").toString());
+        }
+    }
+    return list;
+}
 void Login::paintEvent(QPaintEvent *ev)
 {
     QPainter p(this);
@@ -207,7 +231,7 @@ void Login::on_toolButton_reg_2_clicked()
         ui->lineEdit_regpwdd->clear();
     }
 
-    QByteArray array = getRegJson(userName,nikeName,passWord,phone,email);
+    QByteArray array = setRegJson(userName,nikeName,m_fun.getStrMd5(passWord),phone,email);
 
     QNetworkAccessManager* manager=Funtion::getManager();
     QNetworkRequest request;
@@ -234,6 +258,7 @@ void Login::on_toolButton_reg_2_clicked()
             //登录界面
             ui->lineEdit->setText(userName);//登录界面
             ui->lineEdit_2->setText(passWord);
+            ui->checkBox_savepwd->setCheckState(Qt::Checked);
            //切换到登录界面
             ui->stackedWidget->setCurrentWidget(ui->page_login);
 

@@ -17,6 +17,7 @@ public:
     void writeLoginInfo(QString userName,QString passWord,bool isRemember,QString pathname = CFG_PATH);
     QString getStatusCode(QByteArray json);
     static QNetworkAccessManager* getManager();
+    QString getStrMd5(QString str);
 
 signals:
 private:

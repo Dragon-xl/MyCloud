@@ -8,6 +8,7 @@
 #include<QJsonParseError>
 #include<QApplication>
 #include<QDesktopWidget>
+#include<QCryptographicHash>
 
 QNetworkAccessManager* Funtion::m_manager = new QNetworkAccessManager();
 Funtion::Funtion(QObject *parent)
@@ -72,6 +73,19 @@ QString Funtion::writeCfgFIle(QString ip, QString port, QString pathname)
 
 }
 
+void Funtion::writeLoginInfo(QString userName, QString passWord, bool isRemember, QString pathname)
+{
+    QMap<QString,QVariant> web_server;
+    web_server.insert("ip",getCfgValue("web_server","ip"));
+    web_server.insert("port",getCfgValue("web_server","port"));
+
+    QMap<QString,QVariant> type_path;
+    type_path.insert("path",getCfgValue("type_path","path"));
+
+
+
+}
+
 QString Funtion::getStatusCode(QByteArray json)
 {
     QJsonParseError error;
@@ -83,13 +97,15 @@ QString Funtion::getStatusCode(QByteArray json)
             qDebug()<<"doc.isEmpty()||doc.isNull()";
             return QString();
         }
-    }
+
     if(doc.isObject())
     {
        QJsonObject obj =  doc.object();
        QString ret = obj.value("code").toString();
        return ret;
     }
+    }
+    qDebug()<<error.errorString();
     return QString();
 
 }
@@ -97,6 +113,12 @@ QString Funtion::getStatusCode(QByteArray json)
 QNetworkAccessManager *Funtion::getManager()
 {
     return m_manager;
+}
+
+QString Funtion::getStrMd5(QString str)
+{
+    QByteArray arr = QCryptographicHash::hash(str.toLocal8Bit(),QCryptographicHash::Md5);
+    return arr.toHex();
 }
 
 
