@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/back.png</file>
+        <file>images/icon_line_close.png</file>
+        <file>images/icon_line_minus.png</file>
+        <file>images/icon_line_setting.png</file>
+        <file>images/icon_line_user-45.png</file>
+        <file>images/back1.png</file>
+        <file>images/Maximize.png</file>
+        <file>images/Maximize-1.png</file>
+        <file>images/logo.png</file>
+        <file>images/logo-1.png</file>
+        <file>images/logo-2.png</file>
+        <file>images/logo-3.png</file>
+        <file>images/bangdan.png</file>
+        <file>images/bangdan-2.png</file>
+        <file>images/download.png</file>
+        <file>images/download-2.png</file>
+        <file>images/logout.png</file>
+        <file>images/logout-2.png</file>
+        <file>images/myfile.png</file>
+        <file>images/myfile-2.png</file>
+        <file>images/person.png</file>
+        <file>images/transform.png</file>
+        <file>images/transform-2.png</file>
+        <file>images/share.png</file>
+        <file>images/share-2.png</file>
+        <file>images/clear.png</file>
+        <file>images/upload.png</file>
+    </qresource>
+</RCC>
