@@ -11,7 +11,7 @@
 #include<QStringList>
 #include<QTime>
 #include<QRandomGenerator>
-
+int Common::curFolderId=0;
 QString Common::m_typePath = FILETYPEPATH;
 QStringList Common::m_typeList=QStringList();
 QNetworkAccessManager* Common::m_manager = new QNetworkAccessManager;

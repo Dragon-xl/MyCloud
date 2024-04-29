@@ -16,6 +16,8 @@ enum TransferStatus{Download, Uplaod, Recod};
 #define EMAIL_REG       "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
 #define IP_REG          "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)"
 #define PORT_REG        "^[1-9]$|(^[1-9][0-9]$)|(^[1-9][0-9][0-9]$)|(^[1-9][0-9][0-9][0-9]$)|(^[1-6][0-5][0-5][0-3][0-5]$)"
+
+
 struct FileInfo
 {
     QString md5;            // 文件md5码
@@ -27,8 +29,18 @@ struct FileInfo
     qint64 size;            // 文件大小
     int shareStatus;        // 是否共享, 1共享， 0不共享
     int pv;                 // 下载量
-    QListWidgetItem *item;  // list widget 的item
+    int folder_id;
+     // list widget 的item
 };
+struct FolderInfo
+{
+    int folder_id;
+    int parent_folder_id;
+    QString user;
+    QString folder_name;
+
+};
+
 class Common : public QObject
 {
     Q_OBJECT
@@ -45,6 +57,7 @@ public:
     QString getCode(QByteArray json);
     void writeRecord(QString code,QString filename,QString user,QString path=RECORDFILE);
     QString getBoundary();
+    static int curFolderId;
 
 
 

@@ -4,6 +4,7 @@
 #include"common.h"
 #include "uploadlayout.h"
 #include<QVBoxLayout>
+
 UploadTask* UploadTask::instance = new UploadTask;
 UploadTask::UploadTask()
 {
@@ -55,6 +56,7 @@ int UploadTask::addUploadList(QString path)
     myInfo->dp = d;
     myInfo->isUpload = false;
     myInfo->size=size;
+    myInfo->folder_id=Common::curFolderId;
     UploadLayout* instance = UploadLayout::getInstance();
     if(instance==NULL)
     {

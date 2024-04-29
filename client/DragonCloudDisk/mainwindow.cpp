@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "qmessagebox.h"
 #include "ui_mainwindow.h"
 #include "logininfo.h"
 #include"login.h"
@@ -8,7 +9,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-
+    ui->folderBackBtn->setDisabled(true);
+    connect(ui->page_myfile,&MyfileWg::folderChange,[=](){
+        //qDebug()<<__FILE__<<__LINE__<<Common::curFolderId;
+        if(Common::curFolderId==0)
+        {
+            ui->folderBackBtn->setDisabled(true);
+        }
+        else
+        {
+            ui->folderBackBtn->setEnabled(true);
+        }
+    });
     connect(ui->mainWidgetTitle,&MainTitle::closeWindow,[=]{
         this->close();
     });
@@ -83,10 +95,15 @@ void MainWindow::setUserName(QString user)
 
 void MainWindow::showWindow()
 {
-    ui->statusbar->showMessage("登录成功！",5000);
+    ui->statusbar->showMessage("广告位招商！");
     this->show();
     ui->stackedWidget->setCurrentWidget(ui->page_myfile);
     ui->page_myfile->refreshFiles();
+    double ret = ui->page_myfile->retCap()/1024/1024;
+    QString labe = QString("剩余容量：%1G").arg(ret);
+    ui->label_5->setText(labe);
+    setproBar(ret);
+
 }
 
 void MainWindow::loginOut()
@@ -95,7 +112,14 @@ void MainWindow::loginOut()
     ui->page_myfile->clearTask();
     ui->page_myfile->clearFileList();
     ui->page_myfile->clearItems();
+    Common::curFolderId=0;
 
+}
+
+void MainWindow::setproBar(double num)
+{
+    ui->progressBar->setMaximum(6);
+    ui->progressBar->setValue(num);
 }
 
 
@@ -134,5 +158,39 @@ void MainWindow::on_transformBtn_clicked()
     ui->transformBtn->setIcon(QIcon(":/images/transform-2.png"));
     ui->transformBtn->setFont(QFont("Microsoft YaHei UI",-1,QFont::Bold));
     ui->stackedWidget->setCurrentWidget(ui->page_transform);
+}
+
+
+void MainWindow::on_folderBackBtn_clicked()
+{
+    //ui->page_myfile->refreshFiles();
+    ui->page_myfile->folderBack();
+    if(Common::curFolderId==0)
+    {
+        ui->folderBackBtn->setDisabled(true);
+    }
+
+
+}
+
+
+void MainWindow::on_searchBtn_clicked()
+{
+    QString content = ui->searchLineEdit->text();
+    if(content==NULL)
+    {
+        QMessageBox::information(this,"搜索栏为空","搜索栏不可为空！");
+        return;
+
+    }
+    ui->page_myfile->seacherFiles(content);
+    ui->searchLineEdit->clear();
+}
+
+
+void MainWindow::on_toolButton_clicked()
+{
+    ui->searchLineEdit->clear();
+    ui->page_myfile->searchCancel();
 }
 

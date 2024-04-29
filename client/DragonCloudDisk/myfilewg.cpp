@@ -13,13 +13,20 @@
 #include<QFileDialog>
 #include <QJsonDocument>
 #include<QNetworkReply>
+
 MyfileWg::MyfileWg(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MyfileWg)
 {
+    m_cap=0;
+    m_folderName=new FolderName(this);
+    m_select=new SelectFolder(this);
+    m_remove=new removeConfirm(this);
+
     m_manager = Common::getManager();
     ui->setupUi(this);
     ui->listWidget->setViewMode(QListView::IconMode);
+    ui->listWidget->setProperty("isWrapping", QVariant(true));
     ui->listWidget->setIconSize(QSize(70,95));
     ui->listWidget->setGridSize(QSize(100,1500));
     ui->listWidget->setResizeMode(QListView::Adjust);
@@ -32,26 +39,56 @@ MyfileWg::MyfileWg(QWidget *parent) :
         {
             m_emptyMenu->exec(QCursor::pos());
         }
-
-        else
+        else if(item->text().contains("."))
         {
             ui->listWidget->setCurrentItem(item);
+            m_fileMenu->exec(QCursor::pos());
+        }
+        else
+        {
             if(item->text()=="上传")
             {
                 return;
             }
-            m_fileMenu->exec(QCursor::pos());
+            ui->listWidget->setCurrentItem(item);
+            m_folderMenu->exec(QCursor::pos());
+
+
+
         }
 
     });
-    connect(ui->listWidget,&QListWidget::itemClicked,[=](QListWidgetItem *item){
+    connect(ui->listWidget,&QListWidget::itemDoubleClicked,[=](QListWidgetItem* item){
         if(item->text()=="上传")
         {
             addUploadFiles();
         }
 
+        else if(!(item->text().contains(".")))
+        {
+            openFolder(item->text());
+        }
     });
+
+
     checkTaskTimer();
+}
+
+void MyfileWg::openFolder(QString folderName)
+{
+    for(int i =0;i<m_folderList.size();i++)
+    {
+        FolderInfo* folderInfo = m_folderList.at(i);
+        if(folderInfo->folder_name == folderName)
+        {
+            Common::curFolderId=folderInfo->folder_id;
+            qDebug()<<__FILE__<<__LINE__<<Common::curFolderId;
+            clearItems();
+            //ui->listWidget->addItems();
+            refreshItems();
+            emit folderChange();
+        }
+    }
 }
 
 void MyfileWg::addRightButtonMenu()
@@ -61,22 +98,35 @@ void MyfileWg::addRightButtonMenu()
     m_shareAction = new QAction("分享",this);
     m_propertAction = new QAction("属性",this);
     m_deleteAction = new QAction("删除",this);
+    m_move = new QAction("移动至",this);
 
     m_fileMenu->addAction(m_downloadAction);
     m_fileMenu->addAction(m_shareAction);
     m_fileMenu->addAction(m_propertAction);
     m_fileMenu->addAction(m_deleteAction);
+    m_fileMenu->addAction(m_move);
 
     m_emptyMenu = new MyMenu(this);
     m_refreshAction = new QAction("刷新",this);
+
     m_AescendingAction= new QAction("按照下载量升序",this);
     m_DescendingAction = new QAction("按照下载量降序",this);
     m_uploadAction = new QAction("上传文件",this);
+    m_createNewFolderAction=new QAction("新建文件夹",this);
 
     m_emptyMenu->addAction(m_refreshAction);
     m_emptyMenu->addAction(m_uploadAction);
+    m_emptyMenu->addAction(m_createNewFolderAction);
     m_emptyMenu->addAction(m_AescendingAction);
     m_emptyMenu->addAction(m_DescendingAction);
+
+    m_folderMenu=new MyMenu(this);
+    m_folderDel=new QAction("删除文件夹",this);
+    m_folderPro=new QAction("打开文件夹",this);
+    m_folderMenu->addAction(m_folderPro);
+    m_folderMenu->addAction(m_folderDel);
+
+
 
     connect(m_downloadAction,&QAction::triggered,[=](){
         qDebug()<<"下载";
@@ -96,6 +146,7 @@ void MyfileWg::addRightButtonMenu()
     });
     connect(m_refreshAction,&QAction::triggered,[=](){
         qDebug()<<"刷新";
+
         refreshFiles();
 
     });
@@ -111,6 +162,25 @@ void MyfileWg::addRightButtonMenu()
         qDebug()<<"降序排序";
         refreshFiles("pvdesc");
     });
+    connect(m_createNewFolderAction,&QAction::triggered,[=](){
+        qDebug()<<__FILE__<<__LINE__<<"新建文件夹";
+        createNewFolderAction();
+
+
+    });
+    connect(m_folderDel,&QAction::triggered,[=](){
+        qDebug()<<__FILE__<<__LINE__<<"删除文件夹";
+        removeFolderAction();
+    });
+    connect(m_folderPro,&QAction::triggered,[=](){
+        qDebug()<<__FILE__<<__LINE__<<"文件夹打开";
+        openFolder(ui->listWidget->currentItem()->text());
+
+    });
+    connect(m_move,&QAction::triggered,[=](){
+        qDebug()<<__FILE__<<__LINE__<<"文件夹移动";
+        moveAction();
+    });
 }
 
 void MyfileWg::clearItems()
@@ -125,16 +195,33 @@ void MyfileWg::clearItems()
 
 void MyfileWg::refreshItems()
 {
-    clearItems();
+
     ui->listWidget->clear();
+    if(!m_folderList.isEmpty())
+    {
+        for(int i =0;i<m_folderList.size();i++)
+        {
+            FolderInfo* fInfo = m_folderList.at(i);
+            if(fInfo->parent_folder_id==Common::curFolderId){
+                QListWidgetItem* item = new QListWidgetItem(QIcon(":/images/folder.png"),fInfo->folder_name);
+                ui->listWidget->addItem(item);
+            }
+
+        }
+    }
     if(!m_fileList.isEmpty())
     {
         for(int i =0 ;i<m_fileList.size() ;i++)
         {
             FileInfo *fileInfo = m_fileList.at(i);
-            ui->listWidget->addItem(fileInfo->item);
+            if(fileInfo->folder_id == Common::curFolderId)
+            {
+                QListWidgetItem* item = new QListWidgetItem(QIcon(m_common.getFileType(fileInfo->type)),fileInfo->filename);
+              ui->listWidget->addItem(item);
+            }
         }
     }
+
     ui->listWidget->addItem(new QListWidgetItem(QIcon(":/images/upload.png"),QString("上传")));
 
 }
@@ -267,8 +354,8 @@ void MyfileWg::uploadFile(UploadFileInfo *info)
     data.append("\r\n");
     data.append("Content-Disposition: form-data;");
     LoginInfo *loginInstance = LoginInfo::getInstance();
-    data.append(QString("user=\"%1\";filename=\"%2\";md5=\"%3\";size=%4").arg(loginInstance->getUser())\
-                    .arg(info->fileName).arg(info->md5).arg(info->size).toLocal8Bit());
+    data.append(QString("user=\"%1\";filename=\"%2\";md5=\"%3\";size=%4;folder_id=%5").arg(loginInstance->getUser())\
+                    .arg(info->fileName).arg(info->md5).arg(info->size).arg(info->folder_id).toLocal8Bit());
     data.append("\r\n");
     data.append("Content-Type: application/octet-stream");
     data.append("\r\n");
@@ -359,13 +446,13 @@ void MyfileWg::getUserFiles(QString cmd)
     QNetworkReply* reply = m_manager->post(request,arr);
     if(reply == NULL)
     {
-        qDebug()<<"reply is NULL";
+        qDebug()<<__FILE__<<__LINE__<<"reply is NULL";
         return;
     }
     connect(reply,&QNetworkReply::finished,[=](){
         if(reply->error()!=QNetworkReply::NoError)
         {
-            qDebug()<<"reply err:"<<reply->errorString();
+            qDebug()<<"reply err:"<<__FILE__<<__LINE__<<reply->errorString();
             reply->deleteLater();
             return;
         }
@@ -383,7 +470,7 @@ void MyfileWg::getUserFiles(QString cmd)
             emit logOut();
             return;
         }
-        //jiexi arr
+
 
     });
 
@@ -392,6 +479,7 @@ void MyfileWg::getUserFiles(QString cmd)
 
 void MyfileWg::refreshFiles(QString cmd)
 {
+    m_cap=0;
     m_userFilesNum=0;
     LoginInfo* loginInstance = LoginInfo::getInstance();
     QNetworkRequest request;
@@ -442,8 +530,9 @@ void MyfileWg::refreshFiles(QString cmd)
                 return;
             }
             m_userFilesNum=obj.value("num").toString().toInt();
-
+            clearFolderList();
             clearFileList();
+
 
             if(m_userFilesNum>0)
             {
@@ -467,7 +556,7 @@ void MyfileWg::getUserFilesJson(QByteArray arr)
     QJsonDocument doc = QJsonDocument::fromJson(arr,&err);
     if(err.error!=QJsonParseError::NoError)
     {
-        qDebug()<<"QJsonParseError:"<<err.errorString();
+        qDebug()<<__FILE__<<__LINE__<<"QJsonParseError:"<<err.errorString();
         return;
     }
     if(!doc.isObject())
@@ -482,25 +571,47 @@ void MyfileWg::getUserFilesJson(QByteArray arr)
         return;
     }
     QJsonObject array = doc.object();
+    QJsonArray temp = array.value("folders").toArray();
+    //qDebug()<<__FILE__<<__LINE__<<temp;
+    if(!temp.isEmpty())
+    {
+    //qDebug()<<__FILE__<<__LINE__<<temp.size();
+    for(int i=0;i<temp.size();i++)
+    {
+        QJsonObject obj = temp[i].toObject();
+        FolderInfo* folderInfo = new FolderInfo;
+        folderInfo->folder_id=obj.value("folder_id").toInt();
+        folderInfo->folder_name=obj.value("folder_name").toString();
+        folderInfo->parent_folder_id=obj.value("parent_folder_id").toInt();
+        folderInfo->user=obj.value("user").toString();
+
+        m_folderList.append(folderInfo);
+//        qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->folder_name;
+//         qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->folder_id;
+//         qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->parent_folder_id;
+    }
+    }
     QJsonArray tmp = array.value("files").toArray();
-    qDebug()<<__FILE__<<__LINE__<<tmp.size();
+
     for(int i = 0 ;i<tmp.size();i++)
     {
         QJsonObject obj =tmp[i].toObject();
         FileInfo* fileInfo = new FileInfo;
         fileInfo->filename=obj.value("filename").toString();
         fileInfo->type=obj.value("type").toString();
-        fileInfo->item= new QListWidgetItem(QIcon(m_common.getFileType(fileInfo->type)),fileInfo->filename);
+
         fileInfo->md5=obj.value("md5").toString();
         fileInfo->pv=obj.value("pv").toInt();
         fileInfo->shareStatus=obj.value("share_status").toInt();
         fileInfo->size=obj.value("size").toInt();
+        m_cap+=fileInfo->size;
         QString url=obj.value("url").toString();
         fileInfo->url=url;
         fileInfo->user=obj.value("user").toString();
         fileInfo->time=obj.value("time").toString();
+        fileInfo->folder_id=obj.value("folder_id").toInt();
         m_fileList.append(fileInfo);
-        qDebug()<<__FILE__<<__LINE__<<m_fileList.at(i)->filename;
+        //qDebug()<<__FILE__<<__LINE__<<m_fileList.at(i)->filename;
     }
 
 }
@@ -510,7 +621,7 @@ void MyfileWg::dealSelcetedFile(QString cmd)
     QListWidgetItem* item = ui->listWidget->currentItem();
     for(int i = 0;i<m_fileList.size();i++)
     {
-        if(item == m_fileList.at(i)->item)
+        if(item->text() == m_fileList.at(i)->filename)
         {
             if(cmd=="属性")
             {
@@ -644,19 +755,21 @@ void MyfileWg::removeFile(FileInfo *fileInfo)
         else if(ret == "013")
         {
             QMessageBox::information(this,"删除成功",QString("%1 删除成功").arg(fileInfo->filename));
-            for(int i = 0;i<m_fileList.size();i++)
-            {
-                if(m_fileList.at(i)==fileInfo)
-                {
-                    QListWidgetItem* item = fileInfo->item;
-                    ui->listWidget->removeItemWidget(item);
-                    delete item;
-                    item=NULL;
-                    m_fileList.removeAt(i);
-                    delete fileInfo;
-                    break;
-                }
-            }
+//            for(int i = 0;i<m_fileList.size();i++)
+//            {
+//                if(m_fileList.at(i)==fileInfo)
+//                {
+//                    QListWidgetItem* item = fileInfo->item;
+//                    ui->listWidget->removeItemWidget(item);
+//                    delete item;
+//                    item=NULL;
+//                    m_fileList.removeAt(i);
+//                    delete fileInfo;
+//                    break;
+//                }
+//            }
+            refreshFiles();
+            refreshItems();
             return;
         }
         else if(ret == "014")
@@ -699,7 +812,7 @@ void MyfileWg::addDownloadFiles()
     {
 
 
-        if(curItem==m_fileList.at(i)->item)
+        if(curItem->text()==m_fileList.at(i)->filename)
         {
             QString savePath = QFileDialog::getSaveFileName(this,"请选择文件保存的路径",m_fileList.at(i)->filename);
             if(savePath.isEmpty())
@@ -885,7 +998,339 @@ void MyfileWg::checkTaskTimer()
 
 }
 
+void MyfileWg::createNewFolder(QString folderName,int parentFolderId)
+{
 
+    LoginInfo * loginInfo = LoginInfo::getInstance();
+    qDebug()<<__FILE__<<__LINE__<<parentFolderId;
+    if(loginInfo == NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"LoginInfo::getInstance() failed";
+        return;
+    }
+    QString user = loginInfo->getUser();
+
+    QMap<QString,QVariant> folders;
+    folders.insert("user",user);
+    folders.insert("folder_name",folderName);
+    folders.insert("parent_folder_id",parentFolderId);
+    QJsonDocument doc = QJsonDocument::fromVariant(folders);
+    if(doc.isNull()||doc.isEmpty())
+    {
+        qDebug()<<__FILE__<<__LINE__<<"doc is null";
+        return;
+    }
+    QByteArray arr = doc.toJson();
+    QString url = QString("http://%1:%2/folders").arg(loginInfo->getIp()).arg(loginInfo->getPort());
+    QNetworkRequest requset;
+    requset.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+    requset.setUrl(QUrl(url));
+    QNetworkReply* reply = m_manager->post(requset,arr);
+    if(reply ==NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"reply is NULL";
+        return;
+    }
+    connect(reply,&QNetworkReply::finished,[=](){
+        if(reply->error()!=QNetworkReply::NoError)
+        {
+            qDebug()<<__FILE__<<__LINE__<<"reply err:"<<reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+        QByteArray arr = reply->readAll();
+        reply->deleteLater();
+        QString ret = m_common.getCode(arr);
+        if(ret == "008")
+        {
+            QMessageBox::information(this,"成功","新建文件夹成功");
+            refreshFiles();
+            refreshItems();
+            return;
+        }
+        else
+        {
+            QMessageBox::information(this,"失败","创建失败，请重试");
+            return;
+        }
+
+    });
+
+
+
+
+}
+
+void MyfileWg::moveFiles(QString md5, int folder_id)
+{
+    LoginInfo *info = LoginInfo::getInstance();
+    if(info == NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"LoginInfo::getInstance( err";
+        return;
+    }
+    QString user = info->getUser();
+    QMap<QString,QVariant> move;
+    move.insert("user",user);
+    move.insert("md5",md5);
+    move.insert("folder_id",folder_id);
+    QJsonDocument doc = QJsonDocument::fromVariant(move);
+    if(doc.isNull()||doc.isEmpty())
+    {
+        qDebug()<<__FILE__<<__LINE__<<"(doc.isNull()||doc.isEmpty())";
+        return;
+    }
+    QByteArray arr = doc.toJson();
+    QString url = QString("http://%1:%2/move").arg(info->getIp()).arg(info->getPort());
+    QNetworkRequest request;
+    request.setUrl(QUrl(url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+    QNetworkReply* reply = m_manager->post(request,arr);
+    if(reply == NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"reply is NULL";
+        return;
+    }
+    connect(reply,&QNetworkReply::finished,[=](){
+        if(reply->error()!=QNetworkReply::NoError)
+        {
+            qDebug()<<__FILE__<<__LINE__<<"reply err:"<<reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+        QByteArray arr = reply->readAll();
+        reply->deleteLater();
+        QString ret = m_common.getCode(arr);
+        if(ret != "008")
+        {
+            QString fileName;
+            for(int i = 0;i<m_fileList.size();i++)
+            {
+                FileInfo *info = m_fileList.at(i);
+                if(info->md5 == md5)
+                {
+                    fileName = info->md5;
+                }
+            }
+
+            QMessageBox::information(this,"文件移动失败",fileName+" 文件移动失败，请重试！");
+            return;
+        }
+        else
+        {
+            refreshFiles();
+            refreshItems();
+        }
+    });
+}
+
+void MyfileWg::moveAction()
+{
+    QString fileName = ui->listWidget->currentItem()->text();
+    QString md5;
+    for(int i =0 ;i<m_fileList.size();i++)
+    {
+        FileInfo* info = m_fileList.at(i);
+        if(info->filename == fileName)
+        {
+            md5 = info->md5;
+        }
+    }
+    m_select->setListWidget("0.首页");
+    for(int i =0 ;i<m_folderList.size();i++)
+    {
+        FolderInfo *info = m_folderList.at(i);
+        QString folderName = QString::number(info->folder_id)+"."+info->folder_name;
+        qDebug()<<__FILE__<<__LINE__<<info->folder_id;
+        m_select->setListWidget(folderName);
+    }
+    int ret = m_select->exec();
+    if(ret == QDialog::Accepted)
+    {
+    int id = m_select->retFolderId().toInt();
+    qDebug()<<__FILE__<<__LINE__<<id;
+    if(md5==NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"md5 failed";
+        m_select->clearItem();
+        return;
+    }
+    moveFiles(md5,id);
+    }
+    else
+    m_select->clearItem();
+}
+
+void MyfileWg::createNewFolderAction()
+{
+
+    int res = m_folderName->exec();
+    if(res == QDialog::Accepted)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"accepted";
+        createNewFolder(m_folderName->folderNameContent(),Common::curFolderId);
+    }
+    else
+    {
+        qDebug()<<__FILE__<<__LINE__<<" no accepted";
+        return;
+    }
+}
+
+void MyfileWg::clearFolderList()
+{
+    int n = m_folderList.size();
+    for(int i = 0; i < n; ++i)
+    {
+        FolderInfo *tmp = m_folderList.takeFirst();
+        delete tmp;
+    }
+}
+
+void MyfileWg::folderBack()
+{
+    //refreshFiles();
+    int cur = Common::curFolderId;
+    qDebug()<<__FILE__<<__LINE__<<cur;
+    for(int i =0 ;i<m_folderList.size();i++)
+    {
+        FolderInfo* folderInfo = m_folderList.at(i);
+//        qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->folder_name;
+//        qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->folder_id;
+//        qDebug()<<__FILE__<<__LINE__<<m_folderList.at(i)->parent_folder_id;
+
+        if(folderInfo->folder_id == cur)
+        {
+            Common::curFolderId=folderInfo->parent_folder_id;
+            qDebug()<<__FILE__<<__LINE__<<folderInfo->parent_folder_id;
+            qDebug()<<__FILE__<<__LINE__<<Common::curFolderId;
+            break;
+        }
+    }
+    refreshItems();
+}
+
+void MyfileWg::seacherFiles(QString files)
+{
+    ui->listWidget->clear();
+    for(int i = 0;i<m_fileList.size();i++)
+    {
+        FileInfo* info = m_fileList.at(i);
+        if(info->filename.contains(files))
+        {
+            ui->listWidget->addItem(new QListWidgetItem(QIcon(m_common.getFileType(info->type)),info->filename));
+        }
+    }
+}
+
+void MyfileWg::searchCancel()
+{
+    Common::curFolderId=0;
+    refreshItems();
+}
+
+void MyfileWg::removeFolder(int folderId)
+{
+    QList<FileInfo* > files;
+    for(int i =0;i<m_fileList.size();i++)
+    {
+        FileInfo* info = m_fileList.at(i);
+        if(info->folder_id==folderId)
+        {
+            files.append(info);
+        }
+    }
+    if(!files.isEmpty())
+    {
+        int ret = m_remove->exec();
+        if(ret == QDialog::Accepted)
+        {
+
+            for(int i = 0;i<files.size();i++)
+            {
+                removeFile(files.at(i));
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    QMap<QString,QVariant> folderdel;
+    folderdel.insert("folder_id",folderId);
+    QJsonDocument doc = QJsonDocument::fromVariant(folderdel);
+    if(doc.isEmpty()||doc.isNull())
+    {
+        qDebug()<<__FILE__<<__LINE__<<"doc isNULL";
+        return;
+    }
+    QByteArray arr = doc.toJson();
+    LoginInfo* info = LoginInfo::getInstance();
+    if(info == NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"LoginInfo isNULL";
+        return;
+    }
+    QString url = QString("http://%1:%2/folderdel").arg(info->getIp()).arg(info->getPort());
+    QNetworkRequest request;
+    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
+    request.setUrl(QUrl(url));
+    QNetworkReply* reply = m_manager->post(request,arr);
+    if(reply == NULL)
+    {
+        qDebug()<<__FILE__<<__LINE__<<"reply isNULL";
+        return;
+    }
+    connect(reply,&QNetworkReply::finished,[=](){
+        if(reply->error()!=QNetworkReply::NoError)
+         {
+            qDebug()<<__FILE__<<__LINE__<<"reply is err:"<<reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+        QByteArray arr = reply->readAll();
+        reply->deleteLater();
+        if(m_common.getCode(arr)=="008")
+       {
+            QMessageBox::information(this,"文件夹删除成功","文件夹删除成功");
+           refreshFiles();
+            refreshItems();
+        }
+        else {
+            QMessageBox::information(this,"文件夹删除失败","文件夹删除失败,请稍后重试。");
+        }
+    });
+
+
+
+}
+
+void MyfileWg::removeFolderAction()
+{
+   int folderId=0;
+   QString name =  ui->listWidget->currentItem()->text();
+    for(int i = 0;i<m_folderList.size();i++)
+   {
+        FolderInfo* info = m_folderList.at(i);
+        if(info->folder_name == name)
+        {
+          folderId=info->folder_id;
+            break;
+        }
+   }
+  if(folderId!=0)
+   {
+  removeFolder(folderId);
+  }
+}
+
+double MyfileWg::retCap()
+{
+  double cap=0;
+  cap=6*1024*1024-m_cap;
+  return cap;
+}
 
 
 

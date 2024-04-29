@@ -154,7 +154,7 @@ void ShareList::refreshFileItems()
     for(int i = 0; i < n; ++i)
     {
         FileInfo *tmp = m_shareFileList.at(i);
-        QListWidgetItem *item = tmp->item;
+        QListWidgetItem* item = new QListWidgetItem(QIcon(m_cm.getFileType(tmp->type)),tmp->filename);
         // list widget add item
         ui->listWidget->addItem(item);
     }
@@ -327,7 +327,7 @@ void ShareList::getFileJsonInfo(QByteArray data)
                 info->pv = tmp.value("pv").toInt(); // 下载量
                 info->url = tmp.value("url").toString(); // url
                 info->size = tmp.value("type").toString().toInt(); // 文件大小，以字节为单位
-                info->item = new QListWidgetItem(QIcon(m_cm.getFileType(info->type)), info->filename);
+                //info->item = new QListWidgetItem(QIcon(m_cm.getFileType(info->type)), info->filename);
                 // list添加节点
                 m_shareFileList.append(info);
             }
@@ -362,7 +362,7 @@ void ShareList::addDownloadFiles()
 
     for(int i = 0; i < m_shareFileList.size(); ++i)
     {
-        if(m_shareFileList.at(i)->item == item)
+        if(m_shareFileList.at(i)->filename == item->text())
         {
 
             QString filePathName = QFileDialog::getSaveFileName(this, "选择保存文件路径", m_shareFileList.at(i)->filename );
@@ -557,7 +557,7 @@ void ShareList::dealSelectdFile(ShareList::CMD cmd)
 
     for(int i = 0; i < m_shareFileList.size(); ++i)
     {
-        if(m_shareFileList.at(i)->item == item)
+        if(m_shareFileList.at(i)->filename == item->text())
         {
             if(cmd == Pro)// 文件属性
             {
@@ -639,20 +639,22 @@ void ShareList::cancelShareFile(FileInfo *info)
         if("018" == m_cm.getCode(array) ) // common.h
         {
 
-            for(int i = 0; i < m_shareFileList.size(); ++i)
-            {
-                if( m_shareFileList.at(i) == info)
-                {
-                    QListWidgetItem *item = info->item;
-                    // 从列表视图移除此item
-                    ui->listWidget->removeItemWidget(item);
-                    delete item;
+//            for(int i = 0; i < m_shareFileList.size(); ++i)
+//            {
+//                if( m_shareFileList.at(i) == info)
+//                {
+//                    QListWidgetItem *item = info->item;
+//                    // 从列表视图移除此item
+//                    ui->listWidget->removeItemWidget(item);
+//                    delete item;
 
-                    m_shareFileList.removeAt(i);
-                    delete info;
-                    break;      // 很重要的中断条件
-                }
-            }
+//                    m_shareFileList.removeAt(i);
+//                    delete info;
+//                    break;      // 很重要的中断条件
+//                }
+//            }
+            refreshFiles();
+            refreshFileItems();
 
             QMessageBox::information(this, "操作成功", "此文件已取消分享！！！");
         }

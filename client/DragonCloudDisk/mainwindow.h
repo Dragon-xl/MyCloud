@@ -19,8 +19,10 @@ public:
     void setUserName(QString user);
     void showWindow();
     void loginOut();
+    void setproBar(double num);
 signals:
     void changeUser();
+    void backBtnClick();
 
 private slots:
     void on_myfileBtn_clicked();
@@ -31,9 +33,16 @@ private slots:
 
     void on_transformBtn_clicked();
 
+    void on_folderBackBtn_clicked();
+
+    void on_searchBtn_clicked();
+
+    void on_toolButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString m_user;
     LoginInfo* loginInstance;
+
 };
 #endif // MAINWINDOW_H

@@ -14,6 +14,7 @@ SOURCES += \
     des.c \
     downloadlayout.cpp \
     downloadtask.cpp \
+    foldername.cpp \
     form.cpp \
     login.cpp \
     logininfo.cpp \
@@ -25,6 +26,8 @@ SOURCES += \
     mymenu.cpp \
     property.cpp \
     rankinglist.cpp \
+    removeconfirm.cpp \
+    selectfolder.cpp \
     sharelist.cpp \
     uploadlayout.cpp \
     uploadtask.cpp
@@ -35,6 +38,7 @@ HEADERS += \
     des.h \
     downloadlayout.h \
     downloadtask.h \
+    foldername.h \
     form.h \
     login.h \
     logininfo.h \
@@ -45,12 +49,15 @@ HEADERS += \
     mymenu.h \
     property.h \
     rankinglist.h \
+    removeconfirm.h \
+    selectfolder.h \
     sharelist.h \
     uploadlayout.h \
     uploadtask.h
 
 FORMS += \
     dataprogress.ui \
+    foldername.ui \
     form.ui \
     login.ui \
     logintitle.ui \
@@ -59,6 +66,8 @@ FORMS += \
     myfilewg.ui \
     property.ui \
     rankinglist.ui \
+    removeconfirm.ui \
+    selectfolder.ui \
     sharelist.ui
 
 # Default rules for deployment.

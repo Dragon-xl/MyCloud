@@ -2,7 +2,7 @@
 #define MAINTITLE_H
 
 #include <QWidget>
-#include<QMainWindow>>
+#include<QMainWindow>
 namespace Ui {
 class MainTitle;
 }
