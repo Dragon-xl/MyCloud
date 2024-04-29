@@ -1,0 +1,378 @@
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 4 在操作
+[2024-04-26 17:34:01]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}]
+}
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:598]--cmd = pvdesc
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:399]--sql_num = 4, redis_num = 4
+[2024-04-26 17:34:02]--[src_cgi/sharefiles_cgi.c:529]--{
+	"files":	[{
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"pv":	2
+		}, {
+			"filename":	"uploadText.txt",
+			"pv":	0
+		}, {
+			"filename":	"downloadTest.xlsx",
+			"pv":	0
+		}, {
+			"filename":	"1.pdf",
+			"pv":	0
+		}]
+}
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 4 在操作
+[2024-04-26 18:05:23]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}]
+}
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:85]--line = 5
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 5,
+    "start": 0
+}
+
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 5
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 5 在操作
+[2024-04-26 18:05:37]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}, {
+			"user":	"dragon",
+			"md5":	"3585c5bdf04354713e09fcefe3ff077d",
+			"time":	"2024-04-26 18:05:36",
+			"filename":	"demo.docx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3liAE15MAAF5sNizzKU76.docx",
+			"size":	96688,
+			"type":	"docx"
+		}]
+}
+[2024-04-26 18:05:41]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:05:41]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 18:05:42]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 18:05:42]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 18:05:42]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 18:05:42]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 4 在操作
+[2024-04-26 18:05:42]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}]
+}
+[2024-04-26 18:05:59]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:05:59]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 18:06:00]--[src_cgi/sharefiles_cgi.c:598]--cmd = pvdesc
+[2024-04-26 18:06:00]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 18:06:00]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 18:06:00]--[src_cgi/sharefiles_cgi.c:399]--sql_num = 4, redis_num = 4
+[2024-04-26 18:06:00]--[src_cgi/sharefiles_cgi.c:529]--{
+	"files":	[{
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"pv":	2
+		}, {
+			"filename":	"uploadText.txt",
+			"pv":	0
+		}, {
+			"filename":	"downloadTest.xlsx",
+			"pv":	0
+		}, {
+			"filename":	"1.pdf",
+			"pv":	0
+		}]
+}
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 4 在操作
+[2024-04-26 18:06:01]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}]
+}
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:85]--line = 4
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:598]--cmd = normal
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:636]--buf = {
+    "count": 4,
+    "start": 0
+}
+
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:645]--start = 0, count = 4
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:172]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 4 在操作
+[2024-04-26 18:06:03]--[src_cgi/sharefiles_cgi.c:292]--{
+	"files":	[{
+			"user":	"dragon",
+			"md5":	"3d6afa3bde25b2083c680cc5784fc9f6",
+			"time":	"2024-03-07 01:06:46",
+			"filename":	"52e3677900013d6a05020261.jpg",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGXoS-eAWAlmAABuHniJjmw378.jpg",
+			"size":	28190,
+			"type":	"jpg"
+		}, {
+			"user":	"test01",
+			"md5":	"73b88aff2c60941284fbfa7a670b1f38",
+			"time":	"2024-04-17 18:52:27",
+			"filename":	"1.pdf",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYX3uqATQzhAAM2AwE2v3A047.pdf",
+			"size":	210435,
+			"type":	"pdf"
+		}, {
+			"user":	"dragon",
+			"md5":	"ddbf5e6cd827fe62869a40c1c20e8a16",
+			"time":	"2024-04-19 14:31:42",
+			"filename":	"downloadTest.xlsx",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYhBvKAPsvwAAAhlmes39E20.xlsx",
+			"size":	8598,
+			"type":	"xlsx"
+		}, {
+			"user":	"test02",
+			"md5":	"e597c2a17cf3f660059f9f033583b084",
+			"time":	"2024-04-19 14:50:53",
+			"filename":	"uploadText.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://192.168.164.128:80/group1/M00/00/00/wKikgGYiFDeAUEpjAAAAEwXYSjI896.txt",
+			"size":	19,
+			"type":	"txt"
+		}]
+}

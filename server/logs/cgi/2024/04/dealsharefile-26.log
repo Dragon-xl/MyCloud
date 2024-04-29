@@ -1,0 +1,8 @@
+[2024-04-26 18:05:41]--[src_cgi/dealsharefile_cgi.c:552]--cmd = cancel
+[2024-04-26 18:05:41]--[src_cgi/dealsharefile_cgi.c:584]--buf = {
+    "filename": "demo.docx",
+    "md5": "3585c5bdf04354713e09fcefe3ff077d",
+    "user": "dragon"
+}
+
+[2024-04-26 18:05:41]--[src_cgi/dealsharefile_cgi.c:587]--user = dragon, md5 = 3585c5bdf04354713e09fcefe3ff077d, filename = demo.docx

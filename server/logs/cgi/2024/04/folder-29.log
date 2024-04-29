@@ -1,0 +1,92 @@
+[2024-04-29 15:07:55]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:07:55]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:43:35]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 0,
+    "md5": "3466257539f13098458b235c9c99aa11",
+    "user": "dragon"
+}
+
+[2024-04-29 15:43:35]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:43:35]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 15:44:11]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 0,
+    "md5": "3d6afa3bde25b2083c680cc5784fc9f6",
+    "user": "dragon"
+}
+
+[2024-04-29 15:44:11]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:44:11]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 15:44:57]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:44:57]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:48:41]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 0,
+    "md5": "3466257539f13098458b235c9c99aa11",
+    "user": "dragon"
+}
+
+[2024-04-29 15:48:41]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:48:41]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 15:53:40]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 1,
+    "md5": "3585c5bdf04354713e09fcefe3ff077d",
+    "user": "dragon"
+}
+
+[2024-04-29 15:53:40]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:53:40]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 15:53:58]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 2,
+    "md5": "73b88aff2c60941284fbfa7a670b1f38",
+    "user": "dragon"
+}
+
+[2024-04-29 15:53:58]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:53:58]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 15:58:10]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:58:11]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:58:35]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 1,
+    "md5": "3585c5bdf04354713e09fcefe3ff077d",
+    "user": "dragon"
+}
+
+[2024-04-29 15:58:35]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 15:58:35]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 16:02:04]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "567974",
+    "parent_folder_id": 0,
+    "user": "dragon"
+}
+�
+[2024-04-29 16:08:29]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:08:29]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:08:51]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:08:51]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:09:00]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_id": 1,
+    "md5": "ddbf5e6cd827fe62869a40c1c20e8a16",
+    "user": "dragon"
+}
+
+[2024-04-29 16:09:00]--[src_cgi/folder_cgi.c:59]--cJSON_GetObjectItem(root,"parent_folder_id")
+[2024-04-29 16:09:00]--[src_cgi/folder_cgi.c:164]--get_user_folder failed
+[2024-04-29 16:25:44]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 17:45:11]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "新建文件夹",
+    "parent_folder_id": 0,
+    "user": "dragon"
+}
+
+[2024-04-29 19:40:47]--[src_cgi/folder_cgi.c:32]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 20:11:22]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "新建文件夹",
+    "parent_folder_id": 0,
+    "user": "dragon"
+}
+
+[2024-04-29 20:11:35]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "新建文件夹",
+    "parent_folder_id": 1,
+    "user": "dragon"
+}
+
+[2024-04-29 20:12:04]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "新建文件夹",
+    "parent_folder_id": 0,
+    "user": "dragon"
+}
+
+[2024-04-29 20:15:16]--[src_cgi/folder_cgi.c:160]--buf:{
+    "folder_name": "新建文件夹",
+    "parent_folder_id": 0,
+    "user": "dragon"
+}
+

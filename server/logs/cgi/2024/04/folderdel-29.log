@@ -1,0 +1,12 @@
+[2024-04-29 19:40:47]--[src_cgi/folderdel_cgi.c:31]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 20:11:25]--[src_cgi/folderdel_cgi.c:137]--buf:{
+    "folder_id": 38
+}
+=m
+[2024-04-29 20:11:38]--[src_cgi/folderdel_cgi.c:137]--buf:{
+    "folder_id": 39
+}
+=m
+[2024-04-29 20:12:19]--[src_cgi/folderdel_cgi.c:137]--buf:{
+    "folder_id": 40
+}
+=m

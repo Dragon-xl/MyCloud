@@ -1,0 +1,16 @@
+[2024-04-29 15:07:54]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:07:54]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 15:44:57]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:44:57]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 15:58:10]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 15:58:10]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 16:08:29]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:08:29]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 16:08:51]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:08:51]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 16:25:43]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 16:25:43]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 19:40:47]--[src_cgi/dealfile_cgi.c:42]--mysql:[user=root,pwd=15774756186,database=cloud_disk][2024-04-29 19:40:47]--[src_cgi/dealfile_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2024-04-29 20:12:19]--[src_cgi/dealfile_cgi.c:695]--cmd = del
+[2024-04-29 20:12:19]--[src_cgi/dealfile_cgi.c:727]--buf = {
+    "filename": "52e3677900013d6a05020261.jpg",
+    "md5": "3d6afa3bde25b2083c680cc5784fc9f6",
+    "token": "280801024a5919f0a8a34ff323bb6591",
+    "user": "dragon"
+}
+
+[2024-04-29 20:12:19]--[src_cgi/dealfile_cgi.c:730]--user = dragon, token = 280801024a5919f0a8a34ff323bb6591, md5 = 3d6afa3bde25b2083c680cc5784fc9f6, filename = 52e3677900013d6a05020261.jpg

@@ -1,0 +1,28 @@
+[2024-04-26 18:05:32]--[src_cgi/dealfile_cgi.c:695]--cmd = share
+[2024-04-26 18:05:32]--[src_cgi/dealfile_cgi.c:727]--buf = {
+    "filename": "1.pdf",
+    "md5": "73b88aff2c60941284fbfa7a670b1f38",
+    "token": "06a671f212db7658e4fa39ccb2ffa3c7",
+    "user": "dragon"
+}
+
+[2024-04-26 18:05:32]--[src_cgi/dealfile_cgi.c:730]--user = dragon, token = 06a671f212db7658e4fa39ccb2ffa3c7, md5 = 73b88aff2c60941284fbfa7a670b1f38, filename = 1.pdf
+[2024-04-26 18:05:32]--[src_cgi/dealfile_cgi.c:198]--别人已经分享此文件
+[2024-04-26 18:05:36]--[src_cgi/dealfile_cgi.c:695]--cmd = share
+[2024-04-26 18:05:36]--[src_cgi/dealfile_cgi.c:727]--buf = {
+    "filename": "demo.docx",
+    "md5": "3585c5bdf04354713e09fcefe3ff077d",
+    "token": "06a671f212db7658e4fa39ccb2ffa3c7",
+    "user": "dragon"
+}
+
+[2024-04-26 18:05:36]--[src_cgi/dealfile_cgi.c:730]--user = dragon, token = 06a671f212db7658e4fa39ccb2ffa3c7, md5 = 3585c5bdf04354713e09fcefe3ff077d, filename = demo.docx
+[2024-04-26 18:07:32]--[src_cgi/dealfile_cgi.c:695]--cmd = del
+[2024-04-26 18:07:32]--[src_cgi/dealfile_cgi.c:727]--buf = {
+    "filename": "123.docx",
+    "md5": "3466257539f13098458b235c9c99aa11",
+    "token": "56584be7d3c95783ddded086e34784c3",
+    "user": "dragon"
+}
+
+[2024-04-26 18:07:32]--[src_cgi/dealfile_cgi.c:730]--user = dragon, token = 56584be7d3c95783ddded086e34784c3, md5 = 3466257539f13098458b235c9c99aa11, filename = 123.docx
