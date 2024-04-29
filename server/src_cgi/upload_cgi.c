@@ -1,10 +1,4 @@
-/**
- * @file upload_cgi.c
- * @brief   上传文件后台CGI程序
- * @author  Mike
- * @version 2.0
- * @date 2017年2月26日
- */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,7 +56,7 @@ void read_cfg()
  *          0 succ, -1 fail
  */
 /* -------------------------------------------*/
-int recv_save_file(long len, char *user, char *filename, char *md5, long *p_size)
+int recv_save_file(long len, char *user, char *filename, char *md5, long *p_size,long *p_folder_id)
 {
     int ret = 0;
     char *file_buf = NULL;
@@ -148,7 +142,7 @@ int recv_save_file(long len, char *user, char *filename, char *md5, long *p_size
     q += strlen("user=");
     q++;    //跳过第一个"
 
-    //Content-Disposition: form-data; user="mike"; filename="xxx.jpg"; md5="xxxx"; size=10240\r\n
+    //Content-Disposition: form-data; user="mike"; filename="xxx.jpg"; md5="xxxx"; size=10240; folder_id=0\r\n
     //                                          ↑
     k = strchr(q, '"');
     strncpy(user, q, k-q);  //拷贝用户名
@@ -210,18 +204,36 @@ int recv_save_file(long len, char *user, char *filename, char *md5, long *p_size
 
     //"; size=10240\r\n
     //             ↑
-    k = strstr(q, "\r\n");
+    k = strstr(q, '"');
     char tmp[256] = {0};
     strncpy(tmp, q, k-q);   //内容
     tmp[k-q] = '\0';
 
     *p_size = strtol(tmp, NULL, 10); //字符串转long
 
+
+
+    begin = k;
+    q = begin;
+    q = strstr(begin, "folder_id=");
+
+    //"; size=10240\r\n
+    //        ↑
+    q += strlen("folder_id=");
+
+    //"; size=10240\r\n
+    //             ↑
+    k = strstr(q, "\r\n");
+    char tmp1[256] = {0};
+    strncpy(tmp1, q, k-q);   //内容
+    tmp[k-q] = '\0';
+
+    *p_folder_id = strtol(tmp1, NULL, 10); //字符串转long
+
     begin = p;
     p = strstr(begin, "\r\n");
     p += 4;//\r\n\r\n
     len -= (p-begin);
-
     //下面才是文件的真正内容
 
     /*
@@ -461,7 +473,7 @@ END:
 }
 
 
-int store_fileinfo_to_mysql(char *user, char *filename, char *md5, long size, char *fileid, char *fdfs_file_url)
+int store_fileinfo_to_mysql(char *user, char *filename, char *md5, long size, char *fileid, char *fdfs_file_url,long folder_id)
 {
     int ret = 0;
     MYSQL *conn = NULL; //数据库连接句柄
@@ -524,7 +536,7 @@ int store_fileinfo_to_mysql(char *user, char *filename, char *md5, long size, ch
        -- pv 文件下载量，默认值为0，下载一次加1
        */
     //sql语句
-    sprintf(sql_cmd, "insert into user_file_list(user, md5, createtime, filename, shared_status, pv) values ('%s', '%s', '%s', '%s', %d, %d)", user, md5, create_time, filename, 0, 0);
+    sprintf(sql_cmd, "insert into user_file_list(user, md5, createtime, filename, shared_status, pv,folder_id) values ('%s', '%s', '%s', '%s', %d, %d,%ld)", user, md5, create_time, filename, 0, 0,folder_id);
     if(mysql_query(conn, sql_cmd) != 0)
     {
         LOG(UPLOAD_LOG_MODULE, UPLOAD_LOG_PROC, "%s 操作失败: %s\n", sql_cmd, mysql_error(conn));
@@ -575,6 +587,7 @@ int main()
     char user[USER_NAME_LEN] = {0};   //文件上传者
     char md5[MD5_LEN] = {0};    //文件md5码
     long size;  //文件大小
+    long folder_id;
     char fileid[TEMP_BUF_MAX_LEN] = {0};    //文件上传到fastDFS后的文件id
     char fdfs_file_url[FILE_URL_LEN] = {0}; //文件所存放storage的host_name
 
@@ -585,6 +598,7 @@ int main()
     {
         char *contentLength = getenv("CONTENT_LENGTH");
         long len;
+      
         int ret = 0;
 
         printf("Content-type: text/html\r\n\r\n");
@@ -607,7 +621,7 @@ int main()
         else
         {
             //===============> 得到上传文件  <============
-            if (recv_save_file(len, user, filename, md5, &size) < 0)
+            if (recv_save_file(len, user, filename, md5, &size,&folder_id) < 0)
             {
                 ret = -1;
                 goto END;
@@ -633,7 +647,7 @@ int main()
             }
 
             //===============> 将该文件的FastDFS相关信息存入mysql中 <======
-            if (store_fileinfo_to_mysql(user, filename, md5, size, fileid, fdfs_file_url) < 0)
+            if (store_fileinfo_to_mysql(user, filename, md5, size, fileid, fdfs_file_url,folder_id) < 0)
             {
                 ret = -1;
                 goto END;

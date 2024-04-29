@@ -1,10 +1,3 @@
-/**
- * @file myfiles_cgi.c
- * @brief  用户列表展示CGI程序
- * @author Mike
- * @version 2.0
- * @date 2017年2月27日
- */
 
 #include "fcgi_config.h"
 #include "fcgi_stdio.h"
@@ -267,9 +260,12 @@ int get_user_filelist(char *cmd, char *user, int start, int count)
 {
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
+    char sql[SQL_MAX_LEN]={0};
     MYSQL *conn = NULL;
     cJSON *root = NULL;
     cJSON *array =NULL;
+    cJSON* array1=NULL;
+    MYSQL_RES*  res_folder =NULL;
     char *out = NULL;
     char *out2 = NULL;
     MYSQL_RES *res_set = NULL;
@@ -320,7 +316,7 @@ int get_user_filelist(char *cmd, char *user, int start, int count)
         goto END;
     }
 
-    ulong line = 0;
+    long line = 0;
     //mysql_num_rows接受由mysql_store_result返回的结果结构集，并返回结构集中的行数
     line = mysql_num_rows(res_set);
     if (line == 0)//没有结果
@@ -334,6 +330,7 @@ int get_user_filelist(char *cmd, char *user, int start, int count)
 
     root = cJSON_CreateObject();
     array = cJSON_CreateArray();
+    
     // mysql_fetch_row从使用mysql_store_result得到的结果结构中提取一行，并把它放到一个行结构中。
     // 当数据用完或发生错误时返回NULL.
     while ((row = mysql_fetch_row(res_set)) != NULL)
@@ -391,7 +388,7 @@ int get_user_filelist(char *cmd, char *user, int start, int count)
         //-- shared_status 共享状态, 0为没有共享， 1为共享
         if(row[4] != NULL)
         {
-            cJSON_AddNumberToObject(item, "share_status", atoi( row[4] ));
+            cJSON_AddNumberToObject(item, "share_status", atoi(row[4]));
         }
 
         //-- pv 文件下载量，默认值为0，下载一次加1
@@ -399,32 +396,85 @@ int get_user_filelist(char *cmd, char *user, int start, int count)
         {
             cJSON_AddNumberToObject(item, "pv", atol( row[5] ));
         }
-
-        //-- url 文件url
-        if(row[6] != NULL)
+        if(row[6]!=NULL)
         {
-            cJSON_AddStringToObject(item, "url", row[6]);
+            cJSON_AddNumberToObject(item,"folder_id",atol(row[6]));
+        }
+        //-- url 文件url
+        if(row[7] != NULL)
+        {
+            cJSON_AddStringToObject(item, "url", row[7]);
         }
 
         //-- size 文件大小, 以字节为单位
-        if(row[7] != NULL)
+        if(row[8] != NULL)
         {
-            cJSON_AddNumberToObject(item, "size", atol( row[7] ));
+            cJSON_AddNumberToObject(item, "size", atol( row[8] ));
         }
 
         //-- type 文件类型： png, zip, mp4……
-        if(row[8] != NULL)
+        if(row[9] != NULL)
         {
-            cJSON_AddStringToObject(item, "type", row[8]);
+            cJSON_AddStringToObject(item, "type", row[9]);
         }
 
         cJSON_AddItemToArray(array, item);
     }
 
     cJSON_AddItemToObject(root, "files", array);
-
+  
     out = cJSON_Print(root);
+ 
+    if(start==0)
+    {
+     
+    sprintf(sql,"select * from user_folder where user ='%s'",user);
+    if(mysql_query(conn,sql)!=0)
+    {
+        LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "%s 操作失败：%s\n", sql_cmd, mysql_error(conn));
+        ret = -1;
+        goto END;
+    }
+    
+    res_folder = mysql_store_result(conn);
+    array1=cJSON_CreateArray();
+    
+    if(res_folder==NULL)
+    {
+        LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "smysql_store_result error: %s!\n", mysql_error(conn));
+        ret = -1;
+        goto END;
+    }
+    MYSQL_ROW row;
+    while((row=mysql_fetch_row(res_folder))!=NULL)
+    {   LOG(MYFILES_LOG_MODULE,MYFILES_LOG_PROC,"line");
+        cJSON* item = cJSON_CreateObject();
+        if(row[0]!=NULL)
+        {
+            cJSON_AddNumberToObject(item,"folder_id",atol(row[0]));
+        }
+          if(row[1]!=NULL)
+        {
+            cJSON_AddNumberToObject(item,"parent_folder_id",atol(row[1]));
+        }
+        if(row[2]!=NULL)
+        {
+            cJSON_AddStringToObject(item,"folder_name",row[2]);
+        }
+        if(row[3]!=NULL)
+        {
+            cJSON_AddStringToObject(item,"user",row[3]);
+        }
+      
+        cJSON_AddItemToArray(array1,item);        
+    }
+     
+    cJSON_AddItemToObject(root,"folders",array1);
 
+    }
+    
+    out = cJSON_Print(root);
+    //printf("%s",out);
     LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "%s\n", out);
 
 END:
@@ -526,7 +576,7 @@ int main()
             }
 
             LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "buf = %s\n", buf);
-
+           
             if (strcmp(cmd, "count") == 0) //count 获取用户文件个数
             {
                 get_count_json_info(buf, user, token); //通过json包获取用户名, token
@@ -547,10 +597,12 @@ int main()
                 get_fileslist_json_info(buf, user, token, &start, &count); //通过json包获取信息
                 LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "user = %s, token = %s, start = %d, count = %d\n", user, token, start, count);
 
+
                 //验证登陆token，成功返回0，失败-1
                 ret = verify_token(user, token); //util_cgi.h
                 if(ret == 0)
                 {
+                  
                      get_user_filelist(cmd, user, start, count); //获取用户文件列表
                 }
                 else

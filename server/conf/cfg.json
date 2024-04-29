@@ -11,7 +11,8 @@
 		"port": "3306",
 		"database": "cloud_disk",
 		"user": "root",
-		"pwd": "15774756186"
+		"pwd": "15774756186",
+		"password":"15774756186"
 	},
 	
 	"dfs_path":
